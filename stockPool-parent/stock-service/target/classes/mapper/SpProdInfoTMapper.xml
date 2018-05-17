@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huanxian.dao.SpProdInfoTMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.huanxian.entity.SpProdInfoT">
+        <id column="id" property="id" />
+        <result column="prod_id" property="prodId" />
+        <result column="prod_name" property="prodName" />
+        <result column="classify_id" property="classifyId" />
+        <result column="classify_name" property="classifyName" />
+        <result column="title" property="title" />
+        <result column="pic" property="pic" />
+        <result column="intro" property="intro" />
+        <result column="content" property="content" />
+        <result column="read_num" property="readNum" />
+        <result column="status" property="status" />
+        <result column="modify_user" property="modifyUser" />
+        <result column="modify_time" property="modifyTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id AS id, prod_id AS prodId, prod_name AS prodName, classify_id AS classifyId, classify_name AS classifyName, title AS title, pic AS pic, intro AS intro, content AS content, read_num AS readNum, status AS status, modify_user AS modifyUser, modify_time AS modifyTime
+    </sql>
+    
+    <update id="batchDel" parameterType="java.util.List">
+    	update sp_prod_info_t set STATUS = 3 where id in 
+    	<foreach collection="ids" close=")" item="item" open="(" separator=",">#{item}</foreach>
+    </update>
+</mapper>

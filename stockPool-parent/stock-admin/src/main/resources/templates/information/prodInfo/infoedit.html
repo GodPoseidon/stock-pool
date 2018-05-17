@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>编辑</title>
+</head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap -->
+<link href="/resources/vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Font Awesome -->
+<link href="/resources/vendors/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<!-- NProgress -->
+<link href="/resources/vendors/nprogress/nprogress.css" rel="stylesheet">
+<link href="/resources/vendors/iCheck/skins/all.css">
+<link
+	href="/resources/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
+<!-- Custom Theme Style -->
+<link href="/resources/build/css/custom.css" rel="stylesheet">
+<body>
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<br />
+					<form id="demo-form2" data-parsley-validate
+						class="form-horizontal form-label-left">
+						<input id="id" type="hidden" th:value="${spProdInfoT?.id}">
+
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">选择产品：<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<select id="prodId" class="form-control" required="required">
+									<option th:each="prod : ${prodList}"
+										th:selected="${spProdInfoT?.prodId==prod?.id}"
+										th:value="${prod?.id}" th:text="${prod?.title}"></option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">选择分类：<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<select id="classifyId" class="form-control" required="required">
+									<option th:each="prodClass : ${prodClassList}"
+										th:selected="${spProdInfoT?.classifyId==prodClass?.id}"
+										th:value="${prodClass?.id}" th:text="${prodClass?.name}"></option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">标题<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="title" required="required"
+									th:value="${spProdInfoT?.title}"
+									class="form-control col-md-7 col-xs-12" maxlength="50">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">封面<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="file" class="js-file-cos file" data-result="result" data-show="showName"
+									data-type="IMAGE" th:value="${spProdInfoT?.pic}">
+								<img id="result" alt="" th:src="${spProdInfoT?.pic}" style="height: 22px;width: 22px;">
+								 <span id="showName" style="color: red">11</span>
+							</div>
+
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">简介<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="intro" required="required"
+									th:value="${spProdInfoT?.intro}"
+									class="form-control col-md-7 col-xs-12" maxlength="200">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">正文<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<textarea rows="10" maxlength="2000" cols=""
+									class="form-control" name="content" id="content"
+									th:text="${spProdInfoT?.content}" required="required"></textarea>
+							</div>
+						</div>
+						<p style="display:none" class="textareaVal"></p>
+						<div class="ln_solid"></div>
+						<div class="form-group">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+								<button type="button" id="submit" class="btn btn-success">提交</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- jQuery -->
+	<script src="/resources/vendors/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="/resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- FastClick -->
+	<script src="/resources/vendors/fastclick/lib/fastclick.js"></script>
+	<!-- NProgress -->
+	<script src="/resources/vendors/nprogress/nprogress.js"></script>
+	<!-- bootstrap-progressbar -->
+	<script
+		src="/resources/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+	<!-- iCheck -->
+	<script src="/resources/vendors/iCheck/icheck.min.js"></script>
+	<script type="text/javascript"
+		src="/resources/vendors/My97DatePicker/WdatePicker.js"></script>
+	<script src="/resources/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+	<script src="/resources/vendors/google-code-prettify/src/prettify.js"></script>
+	<!-- jQuery Tags Input -->
+	<script
+		src="/resources/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+	<!-- Switchery -->
+	<script src="/resources/vendors/switchery/dist/switchery.min.js"></script>
+	<!-- Select2 -->
+	<script src="/resources/vendors/select2/dist/js/select2.full.min.js"></script>
+	<!-- Parsley -->
+	<script src="/resources/vendors/parsleyjs/dist/parsley.min.js"></script>
+	<!-- Autosize -->
+	<script src="/resources/vendors/autosize/dist/autosize.min.js"></script>
+	<!-- starrr -->
+	<script src="/resources/vendors/starrr/dist/starrr.js"></script>
+	<!-- Custom Theme Scripts -->
+	<script src="/resources/build/js/custom.js"></script>
+	<!-- layer -->
+	<script type="text/javascript" src="/resources/vendors/layer/layer.js"></script>
+	<!-- kindeditor-4.1.10 -->
+	<script type="text/javascript"
+		src="/resources/vendors/kindeditor-4.1.10/kindeditor-all-min.js"></script>
+	<script type="text/javascript" src="/resources/cos-js-sdk-v4.js"></script>
+	<script type="text/javascript" src="/resources/cos.js"></script>
+	<script type="text/javascript">
+		KindEditor.ready(function(K) {
+			K.create("textarea[name='content']", {
+				resizeType : 1,
+				allowImageUpload : false,//不允许上传图片
+				allowFileManager : false, //允许对上传图片进行管理
+				/* uploadJson: '${ctx}/fileUpload', //上传图片的java代码，只不过放在jsp中 */
+				/* afterUpload: function(){this.sync();}, //图片上传后，将上传内容同步到textarea中 */
+				afterBlur : function() {
+					this.sync();
+				}, ////失去焦点时，将上传内容同步到textarea中
+				items : [ 'fontname', 'fontsize', '|', 'forecolor',
+						'hilitecolor', 'bold', 'italic', 'underline',
+						'removeformat', '|', 'justifyleft', 'justifycenter',
+						'justifyright', 'insertorderedlist',
+						'insertunorderedlist', '|', 'emoticons', 'link' ]
+			});
+		});
+
+		$(function() {
+			if ($("#cover").attr("src") != null) {
+				$("#js-file").removeAttr("required");
+			}
+
+			$("#submit").click(function() {
+				var id = $.trim($("#id").val());
+				var title = $.trim($("#title").val());
+				var intro = $.trim($("#intro").val());
+				var content = $.trim($("#content").val());
+				$(".textareaVal").append(content);
+				content = $(".textareaVal").text();
+				var pic = $.trim($("#result").attr("src"));
+				var prodId = $.trim($("#prodId").val());
+				var prodName = $("#prodId").find('option:selected').text();
+				var classifyId = $.trim($("#classifyId").val());
+				var classifyName = $("#classifyId").find('option:selected').text();
+				if ($('.parsley-error').length != 0) {
+					layer.msg("请输入完整信息！" || K.count('text') < 1);
+					return false;
+				}
+
+				$.ajax({
+					url : "/spProdInfoT/save",
+					type : "post",
+					data : {
+						id : id,
+						title : title,
+						intro : intro,
+						content : content,
+						pic : pic,
+						prodId : prodId,
+						prodName : prodName,
+						classifyId : classifyId,
+						classifyName : classifyName
+					},
+					success : function(result) {
+						if (result.success) {
+							layer.closeAll();
+							parent.location.reload();
+						} else {
+							layer.msg(result.message);
+						}
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>

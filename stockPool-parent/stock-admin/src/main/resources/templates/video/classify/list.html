@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>课程分类</title>
+</head>
+<!-- Bootstrap -->
+<link href="/resources/vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Font Awesome -->
+<link href="/resources/vendors/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<!-- NProgress -->
+<link href="/resources/vendors/nprogress/nprogress.css" rel="stylesheet">
+<!-- iCheck -->
+<link href="/resources/vendors/iCheck/skins/flat/green.css"
+	rel="stylesheet">
+<link href="/resources/build/css/AdminLTE.css" rel="stylesheet">
+<!-- Datatables -->
+<link
+	href="/resources/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="/resources/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="/resources/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="/resources/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="/resources/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css"
+	rel="stylesheet">
+<!-- sweetalert弹窗 -->
+<link href="/resources/vendors/sweetalert/css/sweetalert.css"
+	rel="stylesheet">
+<!-- Custom Theme Style -->
+<link href="/resources/build/css/custom.css" rel="stylesheet">
+<body class="nav-md">
+	<div class="right_col" role="main">
+		<div class="row">
+			<div class="title_left">
+				<form id="queryForm" class="form-inline queryForm">
+					<div
+						class="col-md-5 col-sm-5 col-xs-12 form-group pull-left top_search">
+						<div class="col-lg-12">
+							<div class="row">
+								<div class="form-group input-group-sm">
+									<label class="control-label" for="name">类别名称:</label> <input
+										type="text" name="name" class="form-control"
+										maxlength="10">
+								</div>
+								<div class="form-group input-group-sm">
+									<label class="control-label" for="name">状态:</label> <select
+										class="form-control" name="status">
+										<option value="">未选择</option>
+										<option value="1">启用</option>
+										<option value="2">禁用</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<button type="button" class="btn btn-primary" id="search">
+										<i class="fa fa-submit "></i> 搜索
+									</button>
+									<button type="reset" class="btn btn-warning formRest"
+										style="margin-left: 10px;">
+										<i class="fa fa-reset"></i> 重置
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="x_panel">
+					<div class="x_title">
+						<button id="newAdd">新增</button>
+						<button id="batchDel">批量删除</button>
+					</div>
+					<div class="x_content">
+						<table id="datatable"
+							class="table datatable jambo_table table-bordered bulk_action">
+							<thead>
+								<tr>
+									<th><input type="checkbox" id="check-all" class="flat"></th>
+									<th>序号</th>
+									<th>名称</th>
+									<th>时间</th>
+									<th>创建人</th>
+									<th>状态</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<!-- jQuery -->
+<script src="/resources/vendors/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="/resources/vendors/fastclick/lib/fastclick.js"></script>
+<!-- NProgress -->
+<script src="/resources/vendors/nprogress/nprogress.js"></script>
+<!-- bootstrap-progressbar -->
+<script
+	src="/resources/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<!-- iCheck -->
+<script src="/resources/vendors/iCheck/icheck.min.js"></script>
+<!-- sweetalert -->
+<script type="text/javascript"
+	src="/resources/vendors/sweetalert/js/sweetalert.min.js"></script>
+
+<!-- Datatables -->
+<script
+	src="/resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="/resources/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="/resources/vendors/validator/validator.js"></script>
+<script type="text/javascript"
+	src="/resources/vendors/validator/jquery.validate.min.js"></script>
+<script type="text/javascript"
+	src="/resources/vendors/spin/js/spin.min.js"></script>
+<script type="text/javascript"
+	src="/resources/vendors/spin/js/jquery.spin.js"></script>
+<script type="text/javascript" src="/resources/build/js/custom.js"></script>
+<script type="text/javascript" src="/resources/vendors/layer/layer.js"></script>
+<script type="text/javascript" src="/resources/dataTables.default.js"></script>
+<script type="text/javascript" src="/resources/dataTable.common.tools.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$.dataTable = $("#datatable")
+				.dataTable(
+						{
+							"fnServerData" : function(sSource, aoData,
+									fnCallback) {
+								var queryForm = $("#queryForm").serializeArray();
+								aoData = aoData.concat(queryForm);
+								$.ajax({
+									url : "/video/classify/listData",
+									dataType : "json",
+									type : "post",
+									data : aoData,
+									success : function(resp) {
+										fnCallback(resp);
+									}
+								});
+							},
+							"aoColumns" : [
+									{
+										"data" : "id",
+										"mRender" : function(data, type, row,
+												cell) {
+											return "<input class='flat' name='table_records' value='"+data+"' type='checkbox'>";
+										}
+									},
+									{
+										"data" : null,
+										"render" : function(data, type, row,
+												cell) {
+											return cell.settings._iDisplayStart
+													+ cell.row + 1;
+										}
+									},
+									{
+										"data" : "name"
+									},
+									{
+										"data" : "modifyTime"
+									},
+									{
+										"data" : "modifyUser"
+									},
+									{
+										"data" : "status",
+										"mRender" : function(data, type, row,
+												cell) {
+											if (data == "1") {
+												return '<span class="label label-success">启用</span>';
+											} else if (data == "2") {
+												return '<span class="label label-danger">禁用</span>';
+											}
+										}
+									},
+									{
+										"data" : null,
+										"render" : function(data, type, full,
+												cell) {
+											var rowButton =	'<div class="btn-group">'
+						                      	 +'<button type="button" class="btn btn-danger">操作</button>'
+						                     	 +'<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">'
+						                     	 +'<span class="caret"></span>'
+						                      	 +'<span class="sr-only">Toggle Dropdown</span>'
+						                         +'</button>'
+							                     +'<ul class="dropdown-menu" role="menu">'			
+						                         +'<li><a class="editItem" data-id='+full.id+'><i class="fa fa-pencil"></i>修改</a> </li>'
+						                         +'<li><a class="enable" data-id='+full.id+'><i class="fa fa-link"></i>启用</a> </li>'
+						                         +'<li><a class="unEnable" data-id='+full.id+'><i class="fa fa-database"></i>禁用</a> </li>'
+						                         +'<li class="divider"></li>'
+						                         +'<li><a class="delItem" data-id='+full.id+'><i class="fa fa-trash-o"></i>删除</a> </li>'
+					                      +'</ul> </div>'
+											return rowButton;
+										}
+									} ]
+						});
+		$("table.table.datatable").on("click", "a.editItem", function() {
+			var data_id = $(this).attr("data-id");
+			layer.open({
+				type : 2,
+				title : '编辑',
+				area : [ '800px', '450px' ], //宽高
+				fix : false, //不固定
+				maxmin : true,
+				content : '/video/classify/edit?id=' + data_id
+			});
+		});
+		$("table.table.datatable").on("click", "a.enable", function() {
+			var data_id = $(this).attr("data-id");
+			$.showConfirm('确认启用吗？', function() {
+				$.aikxianPost({
+					"url" : "/video/classify/enable",
+					"data" : {
+						id : data_id
+					},
+					"success" : function(resp) {
+						if ($.dataTable) {
+							$.dataTable.fnDraw();
+						}
+						$.closeMsg();
+					}
+				});
+			});
+		});
+
+		$("table.table.datatable").on("click", "a.unEnable", function() {
+			var data_id = $(this).attr("data-id");
+			$.showConfirm('确认禁用吗？', function() {
+				$.aikxianPost({
+					"url" : "/video/classify/unEnable",
+					"data" : {
+						id : data_id
+					},
+					"success" : function(resp) {
+						if ($.dataTable) {
+							$.dataTable.fnDraw();
+						}
+						$.closeMsg();
+					}
+				});
+			});
+		});
+
+		$("table.table.datatable").on("click", "a.delItem", function() {
+			var data_id = $(this).attr("data-id");
+			$.showConfirm('确认刪除吗？', function() {
+				$.aikxianPost({
+					"url" : "/video/classify/delItem",
+					"data" : {
+						id : data_id
+					},
+					"success" : function(resp) {
+						if ($.dataTable) {
+							$.dataTable.fnDraw();
+						}
+						$.closeMsg();
+					}
+				});
+			});
+		});
+
+		$("#newAdd").click(function() {
+			layer.open({
+				type : 2,
+				title : '新增',
+				area : [ '800px', '450px' ], //宽高
+				fix : false, //不固定
+				maxmin : true,
+				content : '/video/classify/edit'
+			});
+		});
+		$("#batchDel").click(function() {
+			var checkrow = $("table.table.datatable tr input[name='table_records']");
+			if (checkrow.length == 0) {
+				$.showError('请选择至少一条数据');
+				return;
+			}
+			$.showConfirm('确认刪除吗？', function() {
+				$.aikxianPost({
+					"url" : "/video/classify/batchDel",
+					"data" : checkrow.serializeArray(),
+					"success" : function(resp) {
+						if ($.dataTable) {
+							$.dataTable.fnDraw();
+						}
+						$.closeMsg();
+					}
+				});
+			});
+		});
+		$("#search").on("click", function() {
+			$.dataTable.fnDraw();
+		})
+	});
+</script>
+</html>

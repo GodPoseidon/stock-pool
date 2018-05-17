@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huanxian.dao.SpVideoCollegeTMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.huanxian.entity.SpVideoCollegeT">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="cover" property="cover" />
+        <result column="video_time" property="videoTime" />
+        <result column="teacher_id" property="teacherId" />
+        <result column="teacher_name" property="teacherName" />
+        <result column="classify_id" property="classifyId" />
+        <result column="classify_name" property="classifyName" />
+        <result column="url" property="url" />
+        <result column="status" property="status" />
+        <result column="modify_user" property="modifyUser" />
+        <result column="modify_time" property="modifyTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id AS id, title AS title, cover AS cover, video_time AS videoTime, teacher_id AS teacherId, teacher_name AS teacherName, classify_id AS "classifyId", classify_name AS classifyName, url AS url, status AS status, modify_user AS modifyUser, modify_time AS modifyTime
+    </sql>
+
+	<update id="delete">
+		update sp_video_college_t set status = 3 where id = #{id}
+	</update>
+	
+	<update id="batchDel">
+		update sp_video_college_t set status = 3 where id in
+		<foreach collection="ids" close=")" item="id" open="(" separator=",">
+			#{id}
+		</foreach>
+	</update>
+
+</mapper>

@@ -1,0 +1,47 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.huanxian.admin.shiro.ShiroProperties",
+      "name": "shiro",
+      "type": "com.huanxian.admin.shiro.ShiroProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.huanxian.admin.shiro.ShiroProperties",
+      "defaultValue": true,
+      "name": "shiro.enable",
+      "description": "是否开启shiro，defult:true",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.huanxian.admin.shiro.ShiroProperties",
+      "defaultValue": "login",
+      "name": "shiro.login-url",
+      "description": "登录地址",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.huanxian.admin.shiro.ShiroProperties",
+      "defaultValue": 30,
+      "name": "shiro.remember-time",
+      "description": "记住密码时长时间",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.huanxian.admin.shiro.ShiroProperties",
+      "defaultValue": "index",
+      "name": "shiro.success-url",
+      "description": "成功登录跳转地址",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.huanxian.admin.shiro.ShiroProperties",
+      "defaultValue": "403",
+      "name": "shiro.unauthorized-url",
+      "description": "无权限时跳转地址",
+      "type": "java.lang.String"
+    }
+  ]
+}

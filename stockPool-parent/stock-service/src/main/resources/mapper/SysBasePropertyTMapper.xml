@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huanxian.dao.SysBasePropertyTMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.huanxian.entity.SysBasePropertyT">
+		<id column="id" property="id" />
+		<result column="prop_group" property="propGroup" />
+		<result column="value_set" property="valueSet" />
+		<result column="prop_type" property="propType" />
+		<result column="prop_name" property="propName" />
+		<result column="prop_code" property="propCode" />
+		<result column="order_num" property="orderNum" />
+		<result column="prop_value" property="propValue" />
+		<result column="create_user" property="createUser" />
+		<result column="create_time" property="createTime" />
+		<result column="modify_user" property="modifyUser" />
+		<result column="modify_time" property="modifyTime" />
+	</resultMap>
+
+	<!-- 通用查询结果列 -->
+	<sql id="Base_Column_List">
+		id AS id, prop_group AS propGroup, value_set AS valueSet,
+		prop_type AS
+		propType, prop_name AS propName, prop_code AS propCode,
+		order_num AS
+		orderNum, prop_value AS propValue, create_user AS
+		createUser,
+		create_time AS createTime, modify_user AS modifyUser,
+		modify_time AS
+		modifyTime
+	</sql>
+
+
+	<select id="getValue" resultType="String">
+		<![CDATA[	
+			select prop_value from sys_base_property_t	  
+			where prop_group = #{group}
+			and prop_code = #{key}
+		]]>
+	</select>
+
+	<select id="getBasePropertyVoByGroup" resultMap="BaseResultMap">
+		<![CDATA[	
+			select id, prop_type,prop_name,order_num,prop_group,prop_code,prop_value from sys_base_property_t where  prop_group = #{group}  
+		]]>
+	</select>
+
+	<select id="getAll" resultMap="BaseResultMap">
+		select * from sys_base_property_t
+	</select>
+</mapper>

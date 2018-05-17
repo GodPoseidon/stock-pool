@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huanxian.dao.SpInfoClassifyTMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.huanxian.entity.SpInfoClassifyT">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="create_time" property="createTime" />
+        <result column="founder" property="founder" />
+ 		<result column="infc_enable" property="infcEnable" />
+        <result column="infc_delete" property="infcDelete" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, create_time, founder, infc_enable, infc_delete
+    </sql>
+
+	<update id="delInfoClassifyByIds" parameterType="java.util.List">
+		UPDATE 
+			sp_info_classify_t 
+		SET 
+			infc_delete = 1
+		WHERE 
+			id in 
+		<foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+				#{id} 
+			</foreach>
+	</update>
+</mapper>

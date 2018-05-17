@@ -1,0 +1,340 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.huanxian.core.jwt.JWTConfig",
+      "name": "jwt",
+      "type": "com.huanxian.core.jwt.JWTConfig"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "name": "redisson",
+      "type": "com.huanxian.core.redisson.RedissonProperties"
+    },
+    {
+      "sourceType": "com.huanxian.core.swagger2.Swagger2Properties",
+      "name": "swagger2",
+      "type": "com.huanxian.core.swagger2.Swagger2Properties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.huanxian.core.jwt.JWTConfig",
+      "defaultValue": false,
+      "name": "jwt.login-vaildate",
+      "description": "开启jwt登录验证   默认:false",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.huanxian.core.jwt.JWTConfig",
+      "defaultValue": "stock-salt-token",
+      "name": "jwt.salt-value",
+      "description": "自动义盐值",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.huanxian.core.jwt.JWTConfig",
+      "name": "jwt.time-field",
+      "description": "有效时间单位，默认：分钟      参考{@link #Calendar}",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.huanxian.core.jwt.JWTConfig",
+      "defaultValue": 30,
+      "name": "jwt.token-expires",
+      "description": "token存活时间，默认：30",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": "127.0.0.1:6379",
+      "name": "redisson.address",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "name": "redisson.client-name",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": false,
+      "name": "redisson.cluster-servers",
+      "description": "开启集群模式",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "name": "redisson.codec",
+      "description": "序列化",
+      "type": "org.redisson.client.codec.Codec"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": 10000,
+      "name": "redisson.connect-timeout",
+      "description": "Timeout during connecting to any Redis server.\n Value in milliseconds.",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": 0,
+      "name": "redisson.database",
+      "description": "Database index used for Redis connection",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": false,
+      "name": "redisson.enabled",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": false,
+      "name": "redisson.file-config",
+      "description": "是否采用文件形式配置",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": 10000,
+      "name": "redisson.idle-connection-timeout",
+      "description": "If pooled connection not used for a <code>timeout<\/code> time\n and current connections amount bigger than minimum idle connections pool size,\n then it will closed and removed from pool.\n Value in milliseconds.",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "name": "redisson.json-path",
+      "description": "采用json配置",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": false,
+      "name": "redisson.keep-alive",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "name": "redisson.master-address",
+      "description": "主节点",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": false,
+      "name": "redisson.master-slave-servers",
+      "description": "开启主从模式",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": 0,
+      "name": "redisson.netty-threads",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "name": "redisson.node-address",
+      "description": "节点地址集合",
+      "type": "java.lang.String[]"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "name": "redisson.password",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": 0,
+      "name": "redisson.ping-connection-interval",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": 1000,
+      "name": "redisson.ping-timeout",
+      "description": "Ping timeout used in <code>Node.ping<\/code> and <code>Node.pingAll<code> operation.\n Value in milliseconds.",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "name": "redisson.replicated-address",
+      "type": "java.lang.String[]"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": 1000,
+      "name": "redisson.replicated-scan-interval",
+      "description": "Replication group scan interval in milliseconds",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": false,
+      "name": "redisson.replicated-servers",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": 3,
+      "name": "redisson.retry-attempts",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": 1500,
+      "name": "redisson.retry-interval",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "name": "redisson.sentinel-address",
+      "description": "哨兵模式节点地址",
+      "type": "java.lang.String[]"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": false,
+      "name": "redisson.sentinel-servers",
+      "description": "开启哨兵模式",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": true,
+      "name": "redisson.single-server",
+      "description": "开启单服务器模式",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "name": "redisson.slave-address",
+      "description": "从节点",
+      "type": "java.lang.String[]"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": true,
+      "name": "redisson.ssl-enable-endpoint-identification",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "name": "redisson.ssl-keystore",
+      "type": "java.net.URI"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "name": "redisson.ssl-keystore-password",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "name": "redisson.ssl-provider",
+      "type": "org.redisson.config.SslProvider"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "name": "redisson.ssl-truststore",
+      "type": "java.net.URI"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "name": "redisson.ssl-truststore-password",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": 5,
+      "name": "redisson.subscriptions-per-connection",
+      "description": "Subscriptions per Redis connection limit",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": false,
+      "name": "redisson.tcp-no-delay",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": 0,
+      "name": "redisson.threads",
+      "description": "Threads amount shared between all redis node clients",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "defaultValue": 3000,
+      "name": "redisson.timeout",
+      "description": "Redis server response timeout. Starts to countdown when Redis command was succesfully sent.\n Value in milliseconds.",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "name": "redisson.transport-mode",
+      "type": "org.redisson.config.TransportMode"
+    },
+    {
+      "sourceType": "com.huanxian.core.redisson.RedissonProperties",
+      "name": "redisson.yaml-path",
+      "description": "采用yaml配置",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.huanxian.core.swagger2.Swagger2Properties",
+      "name": "swagger2.class-annotation",
+      "description": "扫描的类上的注解,可配置多个",
+      "type": "java.util.List<java.lang.Class<? extends java.lang.annotation.Annotation>>"
+    },
+    {
+      "sourceType": "com.huanxian.core.swagger2.Swagger2Properties",
+      "defaultValue": "Swagger2接口测试页面",
+      "name": "swagger2.desc",
+      "description": "介绍",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.huanxian.core.swagger2.Swagger2Properties",
+      "defaultValue": false,
+      "name": "swagger2.enabled",
+      "description": "是否开启swagger2,默认为false",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.huanxian.core.swagger2.Swagger2Properties",
+      "defaultValue": "default",
+      "name": "swagger2.group-name",
+      "description": "组名称",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.huanxian.core.swagger2.Swagger2Properties",
+      "name": "swagger2.method-annotation",
+      "description": "扫描方法上的注解,可配置多个",
+      "type": "java.util.List<java.lang.Class<? extends java.lang.annotation.Annotation>>"
+    },
+    {
+      "sourceType": "com.huanxian.core.swagger2.Swagger2Properties",
+      "name": "swagger2.scan-base-package",
+      "description": "扫描的包,可配置多个",
+      "type": "java.util.List<java.lang.String>"
+    },
+    {
+      "sourceType": "com.huanxian.core.swagger2.Swagger2Properties",
+      "defaultValue": "Swagger2",
+      "name": "swagger2.title",
+      "description": "标题",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.huanxian.core.swagger2.Swagger2Properties",
+      "defaultValue": "1.0",
+      "name": "swagger2.version",
+      "description": "版本",
+      "type": "java.lang.String"
+    }
+  ]
+}

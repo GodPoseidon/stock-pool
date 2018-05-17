@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap -->
+<link href="/resources/vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Font Awesome -->
+<link href="/resources/vendors/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<!-- NProgress -->
+<link href="/resources/vendors/nprogress/nprogress.css" rel="stylesheet">
+
+<!-- Custom Theme Style -->
+<link href="/resources/build/css/custom.css" rel="stylesheet">
+<body>
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<br />
+					<form id="demo-form2" data-parsley-validate
+						class="form-horizontal form-label-left">
+						<input id="id" type="hidden" th:value="${spAccountProT?.id}">
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">选择用户：<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<select id="accountId" class="form-control" required="required">
+									<option th:each="ac : ${acList}"
+										th:selected="${spAccountProT?.accountId==ac?.id}"
+										th:value="${ac?.id}" th:text="${ac?.phone}"></option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">选择产品：<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<select id="productId" class="form-control" required="required">
+									<option th:each="pro : ${proList}"
+										th:selected="${spAccountProT?.productId==pro?.id}"
+										th:value="${pro?.id}" th:text="${pro?.title}"></option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="form-group input-group-sm">
+									<label class="control-label" for="name">起止时间:</label>
+									<input type="text" th:value="${spAccountProT?.startTime}" class="form-control" id="startDate" name="startDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'endDate\')||\'new Date()\'}'})"> - 
+									<input type="text" th:value="${spAccountProT?.endTime}" class="form-control" id="endDate" name="endDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'startDate\')}'})">
+						</div>
+						
+						<div class="ln_solid"></div>
+						<div class="form-group">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+								<button type="button" id="submit" class="btn btn-success">保存</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- jQuery -->
+	<script src="/resources/vendors/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="/resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- FastClick -->
+	<script src="/resources/vendors/fastclick/lib/fastclick.js"></script>
+	<!-- NProgress -->
+	<script src="/resources/vendors/nprogress/nprogress.js"></script>
+	<!-- bootstrap-progressbar -->
+	<script
+		src="/resources/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+	<!-- iCheck -->
+	<script src="/resources/vendors/iCheck/icheck.min.js"></script>
+	<script type="text/javascript"
+		src="/resources/vendors/My97DatePicker/WdatePicker.js"></script>
+	<script src="/resources/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+	<script src="/resources/vendors/google-code-prettify/src/prettify.js"></script>
+	<!-- jQuery Tags Input -->
+	<script
+		src="/resources/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+	<!-- Switchery -->
+	<script src="/resources/vendors/switchery/dist/switchery.min.js"></script>
+	<!-- Select2 -->
+	<script src="/resources/vendors/select2/dist/js/select2.full.min.js"></script>
+	<!-- Parsley -->
+	<script src="/resources/vendors/parsleyjs/dist/parsley.min.js"></script>
+	<!-- Autosize -->
+	<script src="/resources/vendors/autosize/dist/autosize.min.js"></script>
+	<!-- starrr -->
+	<script src="/resources/vendors/starrr/dist/starrr.js"></script>
+	<!-- Custom Theme Scripts -->
+	<script src="/resources/build/js/custom.js"></script>
+	<!-- layer -->
+	<script type="text/javascript" src="/resources/vendors/layer/layer.js"></script>
+	<!-- kindeditor-4.1.10 -->
+	<script type="text/javascript"
+		src="/resources/vendors/kindeditor-4.1.10/kindeditor-all-min.js"></script>
+	<script type="text/javascript" src="/resources/cos-js-sdk-v4.js"></script>
+	<script type="text/javascript" src="/resources/cos.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$("#submit").click(function() {
+				var id = $.trim($("#id").val());
+				var accountId = $.trim($("#accountId").val());
+				var productId = $.trim($("#productId").val());
+				var startTime = $.trim($("#startDate").val());
+				var endTime = $.trim($("#endDate").val());
+				if ($('.parsley-error').length != 0) {
+					layer.msg("请输入完整信息！" || K.count('text') < 1);
+					return false;
+				}
+				$.ajax({
+					url : "/product/byProSave",
+					type : "post",
+					data : {
+						id : id,
+						accountId : accountId,
+						productId : productId,
+						startTime : startTime,
+						endTime : endTime
+					},
+					success : function(result) {
+						if (result.success) {
+							layer.closeAll();
+							parent.location.reload();
+						} else {
+							layer.msg(result.message);
+						}
+					}
+				});
+			});
+
+		});
+	</script>
+</body>
+</html>

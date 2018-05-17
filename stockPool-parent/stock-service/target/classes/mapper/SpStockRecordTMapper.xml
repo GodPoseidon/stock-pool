@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huanxian.dao.SpStockRecordTMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.huanxian.entity.SpStockRecordT">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="code" property="code" />
+        <result column="max_rise" property="maxRise" />
+        <result column="timing" property="timing" />
+        <result column="status" property="status" />
+        <result column="modify_user" property="modifyUser" />
+        <result column="modify_time" property="modifyTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id AS id, name AS name, code AS code, max_rise AS maxRise, timing AS timing, status AS status, modify_user AS modifyUser, modify_time AS modifyTime
+    </sql>
+
+	<update id="batchDel">
+		update sp_stock_record_t set status = 3 where id in
+		<foreach collection="ids" close=")" item="id" open="(" separator=",">
+			#{id}
+		</foreach>
+	</update>
+	
+	<select id="getList" resultMap="BaseResultMap">
+		select name,code,max_rise,timing  from 	sp_stock_record_t where status = 1 order by modify_time desc limit #{pageIndex},#{pageSize}
+	</select>
+
+</mapper>

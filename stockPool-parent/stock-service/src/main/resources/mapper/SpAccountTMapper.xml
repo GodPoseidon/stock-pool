@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huanxian.dao.SpAccountTMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.huanxian.entity.SpAccountT">
+        <id column="id" property="id" />
+        <result column="phone" property="phone" />
+        <result column="password" property="password" />
+        <result column="nick" property="nick" />
+        <result column="sex" property="sex" />
+        <result column="avatar" property="avatar" />
+        <result column="intro" property="intro" />
+        <result column="prod_id" property="prodId" />
+        <result column="prod_name" property="prodName" />
+        <result column="push_status" property="pushStatus" />
+        <result column="member" property="member" />
+        <result column="teacher" property="teacher" />
+        <result column="last_device" property="lastDevice" />
+        <result column="status" property="status" />
+        <result column="modify_user" property="modifyUser" />
+        <result column="modify_time" property="modifyTime" />
+        <result column="create_user" property="createUser" />
+        <result column="create_time" property="createTime" />
+        <result column="jpush_registration_id" property="jpushRegistrationId"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id AS id, phone AS phone, password AS password, nick AS nick, sex AS sex, avatar AS avatar, intro AS intro,prod_id AS prodId, prod_name AS prodName, push_status AS pushStatus, member AS member, teacher AS teacher, last_device AS lastDevice, status AS status, modify_user AS modifyUser, modify_time AS modifyTime,create_user AS createUser, create_time AS createTime, jpush_registration_id AS jpushRegistrationId 
+    </sql>
+
+	<update id="batchDel">
+		update sp_account_t set status = 3 where id in
+		<foreach collection="ids" close=")" item="item" open="(" separator=",">#{item}</foreach>
+	</update>
+	
+	<update id="delete">
+		update sp_account_t set status = 3 where id = #{id}
+	</update>
+	
+	<select id="getRegistrationIdList" resultType="String">
+		select DISTINCT jpush_registration_id from sp_account_t where status = 1 and push_status = 1 AND !ISNULL(jpush_registration_id)
+		<if test="device != null">
+			and last_device = #{device}
+		</if>
+	</select>
+
+	<select id="getRegistrationIdListByPushStatus" resultType="String">
+		select DISTINCT jpush_registration_id from sp_account_t where status = 1 and push_status = 2 AND !ISNULL(jpush_registration_id)
+		<if test="device != null">
+			and last_device = #{device}
+		</if>
+	</select>
+	
+	<select id="getTeacherList" resultType="HashMap">
+		select id,nick from sp_account_t where status = 1 and teacher = 1
+	</select>
+
+</mapper>

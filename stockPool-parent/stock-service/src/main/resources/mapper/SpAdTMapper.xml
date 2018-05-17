@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huanxian.dao.SpAdTMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.huanxian.entity.SpAdT">
+        <id column="id" property="id" />
+        <result column="type" property="type" />
+        <result column="type_name" property="typeName" />
+        <result column="name" property="name" />
+        <result column="content" property="content" />
+        <result column="picture" property="picture" />
+        <result column="url" property="url" />
+   		<result column="ad_enable" property="adEnable" />
+        <result column="founder" property="founder" />
+        <result column="create_time" property="createTime" />
+        <result column="ad_delete" property="adDelete" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, type, type_name, name, content, picture, url, ad_enable, founder, create_time, ad_delete
+    </sql>
+	
+	<update id="enbAdtByIds" parameterType="java.util.Map">
+		UPDATE 
+			sp_ad_t 
+		SET 
+			ad_enable = #{adEnable}
+		WHERE 
+			id in 
+			<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+				#{id} 
+		</foreach>
+	</update>
+	
+	<update id="delAdtByIds" parameterType="java.util.List">
+		UPDATE 
+			sp_ad_t 
+		SET 
+			ad_delete = '1'
+		WHERE 
+			id in 
+			<foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+				#{id} 
+			</foreach>
+	</update>
+</mapper>

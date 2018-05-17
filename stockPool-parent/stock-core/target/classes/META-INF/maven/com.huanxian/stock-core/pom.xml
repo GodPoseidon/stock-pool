@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.huanxian</groupId>
+		<artifactId>parent</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>stock-core</artifactId>
+	<name>stock-core</name>
+	<url>http://maven.apache.org</url>
+	<packaging>jar</packaging>
+
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<version>2.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>3.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${swagger2.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${swagger2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- 模板引擎 -->
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity-engine-core</artifactId>
+			<version>2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.redisson</groupId>
+			<artifactId>redisson</artifactId>
+			<version>${redisson.vsersion}</version>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+	<build>
+	</build>
+</project>

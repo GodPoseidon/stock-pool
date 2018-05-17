@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap -->
+<link href="/resources/vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Font Awesome -->
+<link href="/resources/vendors/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<!-- NProgress -->
+<link href="/resources/vendors/nprogress/nprogress.css" rel="stylesheet">
+
+<!-- Custom Theme Style -->
+<link href="/resources/build/css/custom.css" rel="stylesheet">
+<body>
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<br />
+					<form id="demo-form2" data-parsley-validate
+						class="form-horizontal form-label-left">
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">ID </label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="id" required="required"
+									th:value="${live?.id}" disabled="disabled"
+									class="form-control col-md-7 col-xs-12" maxlength="10">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">标题 </label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="title" required="required"
+									disabled="disabled" th:value="${live?.title}"
+									class="form-control col-md-7 col-xs-12" maxlength="50">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">介绍 </label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="title" required="required"
+									disabled="disabled" th:value="${live?.intro}"
+									class="form-control col-md-7 col-xs-12" maxlength="220">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">群组ID</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="title" required="required"
+									disabled="disabled" th:value="${live?.groupId}"
+									class="form-control col-md-7 col-xs-12" maxlength="220">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">直播间讲师 </label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="title" required="required"
+									disabled="disabled" th:value="${live?.teacherName}"
+									class="form-control col-md-7 col-xs-12" maxlength="220">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">封面 </label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<img alt="" th:src="${live?.cover}"
+									style="height: 120px; width: 120px;">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">平台直播间 </label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="name" required="required"
+									disabled="disabled" th:value="${live?.platform==0?'不是':'是'}"
+									class="form-control col-md-7 col-xs-12" maxlength="10">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">推流地址 </label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="pushUrl"
+									disabled="disabled" class="form-control col-md-7 col-xs-12">
+								<a type="button" onclick="getPushUrl()" class="btn btn-success">获取推流地址</a>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="last-name">状态 </label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="name" required="required"
+									disabled="disabled" th:value="${live?.status==1?'启用':'禁用'}"
+									class="form-control col-md-7 col-xs-12" maxlength="10">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">创建人 </label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="name" required="required"
+									disabled="disabled" th:value="${live?.createUser}"
+									class="form-control col-md-7 col-xs-12" maxlength="10">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">创建时间 </label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="name"
+									disabled="disabled" th:value="${live?.createTime}"
+									class="form-control col-md-7 col-xs-12" maxlength="29">
+							</div>
+						</div>
+						<div class="ln_solid"></div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- jQuery -->
+	<script src="/resources/vendors/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="/resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- FastClick -->
+	<script src="/resources/vendors/fastclick/lib/fastclick.js"></script>
+	<!-- NProgress -->
+	<script src="/resources/vendors/nprogress/nprogress.js"></script>
+	<!-- bootstrap-progressbar -->
+	<script
+		src="/resources/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+	<!-- iCheck -->
+	<script src="/resources/vendors/iCheck/icheck.min.js"></script>
+	<!-- bootstrap-wysiwyg -->
+	<script
+		src="/resources/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+	<script src="/resources/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+	<script src="/resources/vendors/google-code-prettify/src/prettify.js"></script>
+	<!-- Switchery -->
+	<script src="/resources/vendors/switchery/dist/switchery.min.js"></script>
+	<!-- Parsley -->
+	<script src="/resources/vendors/parsleyjs/dist/parsley.min.js"></script>
+	<!-- Autosize -->
+	<script src="/resources/vendors/autosize/dist/autosize.min.js"></script>
+	<!-- starrr -->
+	<script src="/resources/vendors/starrr/dist/starrr.js"></script>
+	<!-- Custom Theme Scripts -->
+	<script src="/resources/build/js/custom.js"></script>
+	<script type="text/javascript">
+		function getPushUrl() {
+			var roomId = $("#id").val()
+			$.ajax({
+				url:"/liveRoom/getPushUrl",
+				data:{id:roomId},
+				type:"post",
+				dataType:"json",
+				success:function(data){
+					if(data.success){
+						$("#pushUrl").val(data.data);
+					}
+				}
+			});
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huanxian.dao.SpAdClassifyTMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.huanxian.entity.SpAdClassifyT">
+        <id column="id" property="id" />
+        <result column="type" property="type" />
+        <result column="name" property="name" />
+        <result column="code" property="code" />
+        <result column="describe" property="describe" />
+        <result column="founder" property="founder" />
+        <result column="creat_time" property="creatTime" />
+        <result column="adc_delete" property="adcDelete" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, type, name, code, describe, founder, creat_time, adc_delete
+    </sql>
+	
+	<update id="deleteByIds" parameterType="java.util.List">
+		UPDATE 
+			sp_ad_classify_t 
+		SET 
+			adc_delete = '1' 
+		WHERE id IN 
+		<foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+			#{item} 
+		</foreach>
+	</update>
+</mapper>

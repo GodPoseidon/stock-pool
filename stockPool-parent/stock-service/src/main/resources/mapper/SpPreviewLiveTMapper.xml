@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huanxian.dao.SpPreviewLiveTMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap"
+		type="com.huanxian.entity.SpPreviewLiveT">
+		<id column="id" property="id" />
+		<result column="title" property="title" />
+		<result column="url" property="url" />
+		<result column="room_id" property="roomId" />
+		<result column="pic" property="pic" />
+		<result column="preview_time" property="previewTime" />
+		<result column="end_time" property="endTime" />
+		<result column="status" property="status" />
+		<result column="modify_time" property="modifyTime" />
+		<result column="modify_user" property="modifyUser" />
+	</resultMap>
+
+	<!-- 通用查询结果列 -->
+	<sql id="Base_Column_List">
+		id AS id, title AS title, url AS url, room_id AS roomId, pic AS pic,
+		preview_time AS previewTime,end_time AS endTime ,status AS status, modify_time AS
+		modifyTime, modify_user AS modifyUser
+	</sql>
+
+	<update id="batchDel">
+		update sp_preview_live_t set status = 3 where id in
+		<foreach collection="ids" close=")" item="id" open="("
+			separator=",">#{id}</foreach>
+	</update>
+	
+	<update id="delByRoomId" parameterType="Long">
+		update sp_preview_live_t set status = 3 where room_id = #{roomId}
+	</update>
+	
+	<update id="batchDelByRoomId">
+		update sp_preview_live_t set status = 3 where room_id in 
+		<foreach collection="roomIds" close=")" item="roomId" open="(" separator=",">
+			#{roomId}
+		</foreach>
+	</update>
+</mapper>

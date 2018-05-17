@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap -->
+<link href="/resources/vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Font Awesome -->
+<link href="/resources/vendors/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<!-- NProgress -->
+<link href="/resources/vendors/nprogress/nprogress.css" rel="stylesheet">
+
+<!-- Custom Theme Style -->
+<link href="/resources/build/css/custom.css" rel="stylesheet">
+<body>
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<br />
+					<form id="demo-form2" data-parsley-validate
+						class="form-horizontal form-label-left">
+						<input id="id" type="hidden" th:value="${role?.id}">
+						
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">角色名称<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="name" required="required"
+									th:value="${role?.name}"
+									class="form-control col-md-7 col-xs-12" maxlength="10">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="last-name">状态<span class="required">*</span>
+							</label>
+							<div class="col-md-6">
+								<label>启用</label> <input type="radio"  required="required" th:checked="${user?.status==1}" name="status" value="1">
+							</div>
+							<div class="col-md-6 ">
+								<label>禁用</label> <input type="radio" required="required" th:checked="${user?.status==2}"  name="status" value="2">
+							</div>
+						</div>
+						<div class="ln_solid"></div>
+						<div class="form-group">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+								<button type="button" id="submit" class="btn btn-success">提交</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- jQuery -->
+	<script src="/resources/vendors/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="/resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- FastClick -->
+	<script src="/resources/vendors/fastclick/lib/fastclick.js"></script>
+	<!-- NProgress -->
+	<script src="/resources/vendors/nprogress/nprogress.js"></script>
+	<!-- bootstrap-progressbar -->
+	<script
+		src="/resources/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+	<!-- iCheck -->
+	<script src="/resources/vendors/iCheck/icheck.min.js"></script>
+	<!-- bootstrap-daterangepicker -->
+	<script src="/resources/vendors/moment/min/moment.min.js"></script>
+	<!-- bootstrap-wysiwyg -->
+	<script
+		src="/resources/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+	<script src="/resources/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+	<script src="/resources/vendors/google-code-prettify/src/prettify.js"></script>
+	<!-- jQuery Tags Input -->
+	<script
+		src="/resources/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+	<!-- Switchery -->
+	<script src="/resources/vendors/switchery/dist/switchery.min.js"></script>
+	<!-- Select2 -->
+	<script src="/resources/vendors/select2/dist/js/select2.full.min.js"></script>
+	<!-- Parsley -->
+	<script src="/resources/vendors/parsleyjs/dist/parsley.min.js"></script>
+	<!-- Autosize -->
+	<script src="/resources/vendors/autosize/dist/autosize.min.js"></script>
+	<!-- starrr -->
+	<script src="/resources/vendors/starrr/dist/starrr.js"></script>
+	<!-- Custom Theme Scripts -->
+	<script src="/resources/build/js/custom.min.js"></script>
+	<script type="text/javascript" src="/resources/vendors/layer/layer.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$("#submit").click(function() {
+				var id = $.trim($("#id").val());
+				var name = $.trim($("#name").val());
+				var status = $("input[name='status']:checked").val();
+				if($('.parsley-error').length != 0){
+					layer.msg("请输入完整信息！");
+					return false;
+				}
+				$.ajax({
+					url : "/system/role/save",
+					type : "post",
+					data : {
+						id : id,
+						name : name,
+						status : status
+					},
+					success : function(result) {
+						if (result.success) {
+							layer.closeAll();
+							parent.location.reload();
+						} else {
+							layer.msg(result.message);
+						}
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>

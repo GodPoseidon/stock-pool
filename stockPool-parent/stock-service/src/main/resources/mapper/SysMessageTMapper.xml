@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huanxian.dao.SysMessageTMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.huanxian.entity.SysMessageT">
+        <id column="id" property="id" />
+        <result column="account_id" property="accountId" />
+        <result column="title" property="title" />
+        <result column="content" property="content" />
+        <result column="msg_type" property="msgType" />
+        <result column="link" property="link" />
+        <result column="msread" property="msread" />
+        <result column="create_time" property="createTime" />
+        <result column="create_user" property="createUser" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id AS id, account_id AS accountId, title AS title, content AS content, msg_type AS msgType, link AS link, msread AS msread, create_time AS createTime, create_user AS createUser
+    </sql>
+
+</mapper>

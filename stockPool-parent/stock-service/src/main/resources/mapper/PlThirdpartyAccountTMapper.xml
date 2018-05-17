@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huanxian.dao.PlThirdpartyAccountTMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.huanxian.entity.PlThirdpartyAccountT">
+        <id column="id" property="id" />
+        <result column="account_id" property="accountId" />
+        <result column="account" property="account" />
+        <result column="password" property="password" />
+        <result column="integral" property="integral" />
+        <result column="states" property="states" />
+        <result column="types" property="types" />
+        <result column="leave" property="leave" />
+        <result column="rember" property="rember" />
+        <result column="add_person" property="addPerson" />
+        <result column="true_name" property="trueName" />
+        <result column="nice_name" property="niceName" />
+        <result column="mobile" property="mobile" />
+        <result column="ID_number" property="idNumber" />
+        <result column="open_id" property="openId" />
+        <result column="sex" property="sex" />
+        <result column="age" property="age" />
+        <result column="remit" property="remit" />
+        <result column="province" property="province" />
+        <result column="city" property="city" />
+        <result column="area" property="area" />
+        <result column="address" property="address" />
+        <result column="in_come_range" property="inComeRange" />
+        <result column="career" property="career" />
+        <result column="ID_image1" property="idImage1" />
+        <result column="ID_image2" property="idImage2" />
+        <result column="code" property="code" />
+        <result column="simple_no" property="simpleNo" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id AS id, account_id AS accountId, account AS account, password AS password, integral AS integral, states AS states, types AS types, leave AS leave, rember AS rember, add_person AS addPerson, true_name AS trueName, nice_name AS niceName, mobile AS mobile, ID_number AS idNumber, open_id AS openId, sex AS sex, age AS age, remit AS remit, province AS province, city AS city, area AS area, address AS address, in_come_range AS inComeRange, career AS career, ID_image1 AS idImage1, ID_image2 AS idImage2, code AS code, simple_no AS simpleNo, create_time AS createTime
+    </sql>
+
+</mapper>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap -->
+<link href="/resources/vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Font Awesome -->
+<link href="/resources/vendors/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<!-- NProgress -->
+<link href="/resources/vendors/nprogress/nprogress.css" rel="stylesheet">
+
+<!-- Custom Theme Style -->
+<link href="/resources/build/css/custom.css" rel="stylesheet">
+<body>
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<br />
+					<form id="demo-form2" data-parsley-validate
+						class="form-horizontal form-label-left">
+						<input id="id" type="hidden" th:value="${sProductT?.id}">
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">产品：<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="title" required="required"
+									th:value="${sProductT?.title}"
+									class="form-control col-md-7 col-xs-12" maxlength="10">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">封面<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="file" class="js-file-cos file" data-result="result" data-show="showName"
+									data-type="IMAGE" th:value="${sProductT?.pic}">
+								<img id="result" alt="" th:src="${sProductT?.pic}" style="height: 22px;width: 22px;">
+								 <span id="showName" style="color: red">11</span>
+							</div>
+
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">简介<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<textarea rows="10" maxlength="2000" cols=""
+									class="form-control" name="intro" id="intro"
+									th:text="${sProductT?.intro}" required="required"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="last-name">价格：<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="price" maxlength="50" required="required"
+									th:value="${sProductT?.price}"
+									class="form-control col-md-7 col-xs-12">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="last-name">链接：<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="url" maxlength="50" required="required"
+									th:value="${sProductT?.url}"
+									class="form-control col-md-7 col-xs-12">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="last-name">时分秒：<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="time" maxlength="50" required="required"
+									th:value="${sProductT?.time}"
+									class="form-control col-md-7 col-xs-12">
+							</div>
+						</div>
+						<div class="ln_solid"></div>
+						<div class="form-group">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+								<button type="button" id="submit" class="btn btn-success">提交</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- jQuery -->
+	<script src="/resources/vendors/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="/resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- FastClick -->
+	<script src="/resources/vendors/fastclick/lib/fastclick.js"></script>
+	<!-- NProgress -->
+	<script src="/resources/vendors/nprogress/nprogress.js"></script>
+	<!-- bootstrap-progressbar -->
+	<script
+		src="/resources/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+	<!-- iCheck -->
+	<script src="/resources/vendors/iCheck/icheck.min.js"></script>
+	<script type="text/javascript"
+		src="/resources/vendors/My97DatePicker/WdatePicker.js"></script>
+	<script src="/resources/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+	<script src="/resources/vendors/google-code-prettify/src/prettify.js"></script>
+	<!-- jQuery Tags Input -->
+	<script
+		src="/resources/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+	<!-- Switchery -->
+	<script src="/resources/vendors/switchery/dist/switchery.min.js"></script>
+	<!-- Select2 -->
+	<script src="/resources/vendors/select2/dist/js/select2.full.min.js"></script>
+	<!-- Parsley -->
+	<script src="/resources/vendors/parsleyjs/dist/parsley.min.js"></script>
+	<!-- Autosize -->
+	<script src="/resources/vendors/autosize/dist/autosize.min.js"></script>
+	<!-- starrr -->
+	<script src="/resources/vendors/starrr/dist/starrr.js"></script>
+	<!-- Custom Theme Scripts -->
+	<script src="/resources/build/js/custom.js"></script>
+	<!-- layer -->
+	<script type="text/javascript" src="/resources/vendors/layer/layer.js"></script>
+	<!-- kindeditor-4.1.10 -->
+	<script type="text/javascript"
+		src="/resources/vendors/kindeditor-4.1.10/kindeditor-all-min.js"></script>
+	<script type="text/javascript" src="/resources/cos-js-sdk-v4.js"></script>
+	<script type="text/javascript" src="/resources/cos.js"></script>
+	<script type="text/javascript">
+	KindEditor.ready(function(K) {
+		K.create("textarea[name='content']", {
+			resizeType : 1,
+			allowImageUpload : false,//不允许上传图片
+			allowFileManager : false, //允许对上传图片进行管理
+			/* uploadJson: '${ctx}/fileUpload', //上传图片的java代码，只不过放在jsp中 */
+			/* afterUpload: function(){this.sync();}, //图片上传后，将上传内容同步到textarea中 */
+			afterBlur : function() {
+				this.sync();
+			}, ////失去焦点时，将上传内容同步到textarea中
+			items : [ 'fontname', 'fontsize', '|', 'forecolor',
+					'hilitecolor', 'bold', 'italic', 'underline',
+					'removeformat', '|', 'justifyleft', 'justifycenter',
+					'justifyright', 'insertorderedlist',
+					'insertunorderedlist', '|', 'emoticons', 'link' ]
+		});
+	});
+
+		$(function() {
+			if ($("#cover").attr("src") != null) {
+				$("#js-file").removeAttr("required");
+			}
+
+			$("#submit").click(function() {
+				var id = $.trim($("#id").val());
+				var title = $.trim($("#title").val());
+				var pic = $.trim($("#result").attr("src"));
+				var intro = $.trim($("#intro").val());
+				var price = $.trim($("#price").val());
+				var url = $.trim($("#url").val());
+				var time = $.trim($("#time").val());
+				if ($('.parsley-error').length != 0) {
+					layer.msg("请输入完整信息！" || K.count('text') < 1);
+					return false;
+				}
+
+				$.ajax({
+					url : "/product/save",
+					type : "post",
+					data : {
+						id : id,
+						title : title,
+						pic : pic,
+						intro : intro,
+						price : price,
+						url : url,
+						time : time
+					},
+					success : function(result) {
+						if (result.success) {
+							layer.closeAll();
+							parent.location.reload();
+						} else {
+							layer.msg(result.message);
+						}
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap -->
+<link href="/resources/vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Font Awesome -->
+<link href="/resources/vendors/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<!-- NProgress -->
+<link href="/resources/vendors/nprogress/nprogress.css" rel="stylesheet">
+
+<!-- Custom Theme Style -->
+<link href="/resources/build/css/custom.css" rel="stylesheet">
+<body>
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<br />
+					<form id="demo-form2" data-parsley-validate method="post" action="/system/account/save"
+						class="form-horizontal form-label-left">
+						<input id="id" type="hidden" th:value="${property?.id}">
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">参数分组<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="propGroup" required="required"
+									th:value="${property?.propGroup}"
+									class="form-control col-md-7 col-xs-12" maxlength="15">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">参数集合<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="valueSet" required="required"
+									th:value="${property?.valueSet}"
+									class="form-control col-md-7 col-xs-12" maxlength="15">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">参数名<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="propName" required="required"
+									th:value="${property?.propName}"
+									class="form-control col-md-7 col-xs-12" maxlength="30">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">参数编码<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="propCode" required="required"
+									th:value="${property?.propCode}"
+									class="form-control col-md-7 col-xs-12" maxlength="20">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">参数值<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="propValue" required="required"
+									th:value="${property?.propValue}"
+									class="form-control col-md-7 col-xs-12" maxlength="500">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">排序<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="orderNum" required="required"
+									th:value="${property?.orderNum}"
+									class="form-control col-md-7 col-xs-12" maxlength="4">
+							</div>
+						</div>
+						<div class="ln_solid"></div>
+						<div class="form-group">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+								<button type="button" id="submit" class="btn btn-success">提交</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- jQuery -->
+	<script src="/resources/vendors/jquery/dist/jquery.min.js"></script>
+	<script src="/resources/vendors/parsleyjs/dist/parsley.min.js"></script>
+	
+	<!-- Bootstrap -->
+	<script src="/resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- FastClick -->
+	<script src="/resources/vendors/fastclick/lib/fastclick.js"></script>
+	<!-- NProgress -->
+	<script src="/resources/vendors/nprogress/nprogress.js"></script>
+	<!-- bootstrap-progressbar -->
+	<script
+		src="/resources/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+	<!-- iCheck -->
+	<script src="/resources/vendors/iCheck/icheck.min.js"></script>
+	<!-- Autosize -->
+	<script src="/resources/vendors/autosize/dist/autosize.min.js"></script>
+	<!-- Custom Theme Scripts -->
+	<script src="/resources/build/js/custom.min.js"></script>
+	<script type="text/javascript" src="/resources/vendors/layer/layer.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$("#submit").click(function() {
+				var id = $.trim($("#id").val());
+				var propGroup = $.trim($("#propGroup").val());
+				var valueSet = $.trim($("#valueSet").val());
+				var propName = $.trim($("#propName").val());
+				var propCode = $.trim($("#propCode").val());
+				var propValue = $.trim($("#propValue").val());
+				var orderNum = $.trim($("#orderNum").val());
+				if($('.parsley-error').length != 0){
+					layer.msg("请输入完整信息！");
+					return false;
+				}
+				
+				$.ajax({
+					url : "/system/property/save",
+					type : "post",
+					data : {
+						id : id,
+						propGroup : propGroup,
+						valueSet : valueSet,
+						propName : propName,
+						propCode : propCode,
+						propValue : propValue,
+						orderNum : orderNum
+					},
+					success : function(result) {
+						if (result.success) {
+							layer.closeAll();
+							parent.location.reload();
+						} else {
+							layer.msg(result.message);
+						}
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>

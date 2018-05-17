@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huanxian.dao.SpAccountProTMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.huanxian.entity.SpAccountProT">
+        <id column="id" property="id" />
+        <result column="accountId" property="accountId" />
+        <result column="productId" property="productId" />
+        <result column="startTime" property="startTime" />
+        <result column="endTime" property="endTime" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id AS id, accountId AS accountId, productId AS productId, startTime AS startTime, endTime AS endTime, status AS status
+    </sql>
+
+
+
+	<select id="queryPro" parameterType="java.lang.Long" resultType="java.util.Map">
+		SELECT
+			pro.id,
+			pro.title,
+			pro.price,
+			pro.pic,
+			pro.intro,
+			pro.url,
+			pro.time,
+			pro.`status` proStatus,
+			pro.modify_user,
+			pro.modify_time,
+			apro.`status` ,
+			DATEDIFF(endTime, now()) AS fate
+		FROM
+			sp_product_t pro
+		INNER JOIN sp_account_pro_t apro ON apro.productId = pro.id
+		WHERE
+			apro.accountId = #{accountId}
+		
+	</select>
+	
+	<select id="queryBypro" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			ap.id,
+			a.phone,
+			a.nick,
+			p.title,
+			ap.startTime,
+			ap.endTime,
+			ap.`status`
+		FROM
+			sp_account_pro_t ap
+		INNER JOIN sp_account_t a ON a.id = ap.accountId
+		INNER JOIN sp_product_t p ON p.id = ap.productId
+		WHERE
+			1 = 1 
+		
+		<if test="search != '' and search != null">
+		AND
+			(
+				a.phone LIKE  CONCAT('%', #{search}, '%') 
+				OR a.nick LIKE  CONCAT('%', #{search}, '%') 
+				OR p.title LIKE  CONCAT('%', #{search}, '%') 
+			)
+		</if>
+		<if test="status != '' and status != null">
+			AND ap.`status` = #{status}
+		</if>
+	</select>
+</mapper>

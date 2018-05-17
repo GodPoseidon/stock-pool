@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huanxian.dao.SpCourseTMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.huanxian.entity.SpCourseT">
+        <id column="id" property="id" />
+        <result column="package_id" property="packageId" />
+        <result column="title" property="title" />
+        <result column="intro" property="intro" />
+        <result column="pic" property="pic" />
+        <result column="url" property="url" />
+        <result column="sort" property="sort" />
+        <result column="video_time" property="videoTime" />
+        <result column="status" property="status" />
+        <result column="modify_time" property="modifyTime" />
+        <result column="modify_user" property="modifyUser" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id AS id, package_id AS packageId, title AS title, intro AS intro, pic AS pic, url AS url, sort AS sort, video_time AS videoTime, status AS status, modify_time AS modifyTime, modify_user AS modifyUser
+    </sql>
+	
+	<update id="batchDel">
+		update sp_course_t set status = 3 where id in
+		<foreach collection="ids" close=")" item="id" open="(" separator=",">
+			#{id}
+		</foreach>
+	</update>
+
+</mapper>

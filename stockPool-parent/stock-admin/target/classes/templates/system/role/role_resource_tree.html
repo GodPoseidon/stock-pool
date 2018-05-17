@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>角色资源管理</title>
+</head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap -->
+<link href="/resources/vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Font Awesome -->
+<link href="/resources/vendors/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<!-- NProgress -->
+<link href="/resources/vendors/nprogress/nprogress.css" rel="stylesheet">
+<link href="/resources/vendors/zTree/css/zTreeStyle/zTreeStyle.css"
+	rel="stylesheet">
+<link href="/resources/vendors/zTree/css/metroStyle/metroStyle.css"
+	rel="stylesheet">
+<!-- Custom Theme Style -->
+<link href="/resources/build/css/custom.css" rel="stylesheet">
+<body>
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel">
+				<div class="x_content">
+					<form class="form-horizontal form-label-left" id="editForm">
+						<ul id="treeDemo" class="ztree"></ul>
+						<input type="hidden" id="roleIdHidden" name="roleId" th:value="${roleId}" />
+						<button type="button" onclick="submitFrom();" class="btn btn-success">
+							<i class="fa fa-save "></i>保存
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- jQuery -->
+	<script src="/resources/vendors/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="/resources/vendors/layer/layer.js"></script>
+	<!-- Bootstrap -->
+	<script src="/resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- FastClick -->
+	<script src="/resources/vendors/fastclick/lib/fastclick.js"></script>
+	<!-- NProgress -->
+	<script src="/resources/vendors/nprogress/nprogress.js"></script>
+	<!-- Autosize -->
+	<script src="/resources/vendors/autosize/dist/autosize.min.js"></script>
+	<!-- Custom Theme Scripts -->
+	<script src="/resources/build/js/custom.min.js"></script>
+	<script type="text/javascript"
+		src="/resources/vendors/zTree/js/jquery.ztree.all.js"></script>
+	<script type="text/javascript">
+		var setting = {
+			check : {
+				enable : true
+			},
+			chkboxType : {
+				"Y" : "ps",
+				"N" : "ps"
+			},
+			data : {
+				simpleData : {
+					enable : true
+				}
+			}
+		};
+		$(function() {
+			loadTree();
+		});
+		function loadTree() {
+			var roleId = $("#roleIdHidden").val();
+			var result = sendAjax("/system/menu/getMenuData?roleId=" + roleId,
+					"GET");
+
+		$.fn.zTree.init($("#treeDemo"), setting, result);
+		}
+		function sendAjax(sendUrl, sendType) {
+			var resultData = "";
+			$.ajax({
+				type : sendType,
+				url : sendUrl,
+				async : false,
+				dataType : "json",
+				success : function(data) {
+					resultData = data;
+				}
+			});
+			return resultData;
+		}
+		
+		function submitFrom() {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			var nodes = zTree.getCheckedNodes(true); 
+			var resourceId="";
+			$(nodes).each(function(i,item){
+				if(item.isResource==true){
+					resourceId+=item.id+",";
+				}
+			});
+			var roleId = $("#roleIdHidden").val();
+			$.ajax({
+				type : "post",
+				url : "/system/role/saveRoleResource",
+				async : false,
+				data : {
+					roleId : roleId,
+					resourceId : resourceId
+				},
+				dataType : "json",
+				success : function(data) {
+					layer.msg("成功");
+					//当你在iframe页面关闭自身时
+					var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+					parent.layer.close(index); //再执行关闭  
+					parent.location.reload();
+				}
+			});
+		}
+	</script>
+</body>
+</html>

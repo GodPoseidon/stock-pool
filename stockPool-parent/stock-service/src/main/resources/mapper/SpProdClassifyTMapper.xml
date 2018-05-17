@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huanxian.dao.SpProdClassifyTMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.huanxian.entity.SpProdClassifyT">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="prodId" property="prodId" />
+        <result column="room_id" property="roomId" />
+        <result column="modify_user" property="modifyUser" />
+        <result column="modify_time" property="modifyTime" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id AS id, name AS name,prodId AS prodId, room_id AS roomId, modify_user AS modifyUser, modify_time AS modifyTime, status AS status
+    </sql>
+
+	<update id="batchDel" parameterType="java.util.List">
+    	update sp_prod_classify_t set STATUS = 3 where id in 
+    	<foreach collection="ids" close=")" item="item" open="(" separator=",">#{item}</foreach>
+    </update>
+    
+    <select id="queryRoom" parameterType="java.lang.Long" resultType="java.lang.String">
+		SELECT
+			room_id
+		FROM
+			sp_prod_classify_t
+		WHERE
+			id IN (
+				SELECT
+					classify_id
+				FROM
+					sp_prod_info_t
+				WHERE
+					prod_id = #{prodId}
+				AND classify_name = 'VIP直播间'
+			)
+		LIMIT 1
+    </select>
+    
+</mapper>

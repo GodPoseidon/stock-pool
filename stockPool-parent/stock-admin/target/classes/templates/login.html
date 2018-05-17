@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>桓 线 | 股票池 </title>
+
+    <!-- Bootstrap -->
+    <link th:href="@{/resources/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link th:href="@{/resources/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+    <!-- NProgress -->
+    <link th:href="@{/resources/vendors/nprogress/nprogress.css}" rel="stylesheet">
+    <!-- Animate.css -->
+    <link th:href="@{/resources/vendors/animate.css/animate.min.css}" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link th:href="@{/resources/build/css/custom.min.css}" rel="stylesheet">
+  </head>
+
+  <body class="login">
+    <div>
+      <a class="hiddenanchor" id="signup"></a>
+      <a class="hiddenanchor" id="signin"></a>
+
+      <div class="login_wrapper">
+        <div class="animate form login_form">
+          <section class="login_content">
+            <form>
+              <h1>登 录</h1>
+              <div>
+                <input type="text" class="form-control" id="account" placeholder="账号" required="required" />
+              </div>
+              <div>
+                <input type="password" class="form-control" id="password" placeholder="密码" required="required" />
+              </div>
+              <div>
+                <a class="btn btn-default" id="login">登录</a>
+              </div>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <p>©2018 All Rights Reserved.http://admin.stock.aikline.cn</p>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+  <script type="text/javascript"  th:src="@{/resources/vendors/jquery/dist/jquery.min.js}" ></script>
+  <script type="text/javascript"  th:src="@{/resources/vendors/layer/layer.js}"></script>
+  <script type="text/javascript" th:inline="javascript" >
+  /*<![CDATA[*/  
+	  var basePath = /*[[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]]*/;  
+			$(function() {
+				$("#login").click(function() {
+					var account = $.trim($("#account").val());
+					var password = $.trim($("#password").val());
+					if(account != '' && password != '') {
+						$.ajax({
+							url: basePath + "/login",
+							type: "post",
+							data: {
+								username: account,
+								password: password
+							},
+							success: function(data) {
+								if(data.code == "0") {
+									location.href = "index";
+								} else if(data.code == "1001") {
+									layer.msg("密码或账号错误！");
+								}else {
+									layer.msg(data.message);
+								}
+							}
+						});
+					} else {
+						layer.msg("账号或密码不能为空！");
+					}
+				});
+			});
+			/*]]>*/  
+		</script>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huanxian.dao.SysResourceTMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap"
+		type="com.huanxian.entity.SysResourceT">
+		<id column="id" property="id" />
+		<result column="cn_name" property="cnName" />
+		<result column="en_name" property="enName" />
+		<result column="url" property="url" />
+		<result column="status" property="status" />
+		<result column="num" property="num" />
+		<result column="parent_id" property="parentId" />
+		<result column="create_time" property="createTime" />
+		<result column="create_user" property="createUser" />
+		<result column="modify_time" property="modifyTime" />
+		<result column="modify_user" property="modifyUser" />
+	</resultMap>
+
+	<!-- 通用查询结果列 -->
+	<sql id="Base_Column_List">
+		id, cn_name, en_name, url, status, num, parent_id,
+		create_time,
+		create_user, modify_time, modify_user
+	</sql>
+
+	<select id="listResourceByUserId" resultMap="BaseResultMap">
+		select r.* from
+		sys_resource_t r left join sys_user_resource_t ur on r.id =
+		ur.resource_id where ur.user_id = #{userId};
+	</select>
+
+	<select id="listRoleResourceByUserId" resultMap="BaseResultMap">
+		select r.* from
+		sys_resource_t r left join sys_role_resource_t rr on r.id =
+		rr.resource_id where rr.role_id = #{roleId};
+	</select>
+
+	<select id="getGroupByParentId" resultType="Long">
+		select parent_id from
+		sys_resource_t where status = 1 group by
+		parent_id
+	</select>
+
+	<select id="getResourcesMenuByLoginId" resultMap="BaseResultMap">
+		SELECT DISTINCT
+		c.*
+		FROM
+		sys_resource_t c,
+		sys_role_resource_t d
+		WHERE
+		d.role_id IN (
+		SELECT
+		a.role_id
+		FROM
+		sys_user_role_t a,
+		sys_user_t b
+		WHERE
+		b.id = #{userId} AND a.user_id = b.id
+		)
+		AND c.id = d.resource_id
+		AND c.parent_id = #{parentId} ORDER BY c.num ASC;
+	</select>
+
+	<select id="getResourceList" resultMap="BaseResultMap">
+		select * from
+		sys_resource_t where status = 1 order by num asc
+	</select>
+</mapper>

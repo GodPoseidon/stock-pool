@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huanxian.dao.SpInfoTMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap"
+		type="com.huanxian.entity.SpInfoT">
+		<id column="id" property="id" />
+		<result column="classId" property="classId" />
+		<result column="className" property="className" />
+		<result column="title" property="title" />
+		<result column="outline" property="outline" />
+		<result column="content" property="content" />
+		<result column="cover" property="cover" />
+		<result column="create_time" property="createTime" />
+		<result column="readsum" property="readsum" />
+		<result column="url" property="url" />
+		<result column="inf_rec" property="infRec" />
+		<result column="inf_enable" property="infEnable" />
+		<result column="inf_release" property="infRelease" />
+		<result column="inf_delete" property="infDelete" />
+	</resultMap>
+
+	<!-- 通用查询结果列 -->
+	<sql id="Base_Column_List">
+		id, classId AS classId, className, title, outline, content, cover,
+		create_time, readsum, url, inf_rec, inf_enable, inf_release,
+		inf_delete
+	</sql>
+
+	<update id="delInfoByIds" parameterType="java.util.List">
+		UPDATE
+		sp_info_t
+		SET
+		inf_delete = 1
+		WHERE
+		id in
+		<foreach collection="ids" index="index" item="id" open="("
+			separator="," close=")">
+			#{id}
+		</foreach>
+	</update>
+
+</mapper>

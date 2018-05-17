@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>牛股战绩</title>
+</head>
+<!-- Bootstrap -->
+<link href="/resources/vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Font Awesome -->
+<link href="/resources/vendors/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<!-- NProgress -->
+<link href="/resources/vendors/nprogress/nprogress.css" rel="stylesheet">
+<!-- iCheck -->
+<link href="/resources/vendors/iCheck/skins/flat/green.css"
+	rel="stylesheet">
+<link href="/resources/build/css/AdminLTE.css" rel="stylesheet">
+<!-- Datatables -->
+<link
+	href="/resources/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="/resources/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="/resources/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="/resources/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="/resources/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css"
+	rel="stylesheet">
+<!-- sweetalert弹窗 -->
+<link href="/resources/vendors/sweetalert/css/sweetalert.css"
+	rel="stylesheet">
+<!-- Custom Theme Style -->
+<link href="/resources/build/css/custom.css" rel="stylesheet">
+<body class="nav-md">
+	<div class="right_col" role="main">
+		<div class="row">
+			<div class="title_left">
+				<form id="queryForm" class="form-inline queryForm">
+					<div
+						class="col-md-5 col-sm-5 col-xs-12 form-group pull-left top_search">
+						<div class="col-lg-12">
+							<div class="row">
+								<div class="form-group input-group-sm">
+									<label class="control-label" for="name">标题:</label> <input
+										type="text" name="title" class="form-control"
+										maxlength="25">
+								</div>
+								<div class="form-group input-group-sm">
+									<label class="control-label" for="name">类别:</label>
+									<select name="className" class="form-control">
+										<option value="">请选择</option>
+										<option th:each="classify : ${classifyList}" th:value="${classify?.name}" th:text="${classify?.name}"></option>
+									</select>
+								</div>
+								<div class="form-group input-group-sm">
+									<label class="control-label" for="name">时间:</label>
+									<input type="text" class="form-control" id="startDate" name="startDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'endDate\')||\'new Date()\'}'})"> - 
+									<input type="text" class="form-control" id="endDate" name="endDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{$dp.$D(\'startDate\')}'})">
+								</div>
+								<div class="form-group input-group-sm">
+									<label class="control-label" for="name">状态:</label> <select
+										class="form-control" name="infEnable">
+										<option value="">未选择</option>
+										<option value="0">启用</option>
+										<option value="1">禁用</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<button type="button" class="btn btn-primary" id="search">
+										<i class="fa fa-submit "></i> 搜索
+									</button>
+									<button type="reset" class="btn btn-warning formRest"
+										style="margin-left: 10px;">
+										<i class="fa fa-reset"></i> 重置
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div class="x_panel">
+					<div class="x_title">
+						<button id="newAdd">新增</button>
+						<button id="batchDel">批量删除</button>
+					</div>
+					<div class="x_content">
+						<table id="datatable"
+							class="table datatable jambo_table table-bordered bulk_action">
+							<thead>
+								<tr>
+									<th><input type="checkbox" id="check-all" class="flat"></th>
+									<th>序号</th>
+									<th>类别</th>
+									<th>标题</th>
+									<th>简介</th>
+									<th>封面</th>
+									<th>链接</th>
+									<th>浏览量</th>
+									<th>提交时间</th>
+									<th>推荐</th>
+									<th>发布</th>
+									<th>状态</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<!-- jQuery -->
+<script src="/resources/vendors/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="/resources/vendors/fastclick/lib/fastclick.js"></script>
+<!-- NProgress -->
+<script src="/resources/vendors/nprogress/nprogress.js"></script>
+<!-- bootstrap-progressbar -->
+<script
+	src="/resources/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<!-- iCheck -->
+<script src="/resources/vendors/iCheck/icheck.min.js"></script>
+<!-- sweetalert -->
+<script type="text/javascript" src="/resources/vendors/sweetalert/js/sweetalert.min.js"></script>
+
+<script type="text/javascript" src="/resources/vendors/My97DatePicker/WdatePicker.js"></script>
+
+<!-- Datatables -->
+<script
+	src="/resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script
+	src="/resources/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="/resources/vendors/validator/validator.js"></script>
+<script type="text/javascript"
+	src="/resources/vendors/validator/jquery.validate.min.js"></script>
+<script type="text/javascript"
+	src="/resources/vendors/spin/js/spin.min.js"></script>
+<script type="text/javascript"
+	src="/resources/vendors/spin/js/jquery.spin.js"></script>
+<script type="text/javascript" src="/resources/build/js/custom.js"></script>
+<script type="text/javascript" src="/resources/vendors/layer/layer.js"></script>
+<script type="text/javascript" src="/resources/dataTables.default.js"></script>
+<script type="text/javascript" src="/resources/dataTable.common.tools.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$.dataTable = $("#datatable")
+				.dataTable(
+						{
+							"fnServerData" : function(sSource, aoData,
+									fnCallback) {
+								var queryForm = $("#queryForm").serializeArray();
+								aoData = aoData.concat(queryForm);
+								$.ajax({
+									url : "/info/listData",
+									dataType : "json",
+									type : "post",
+									data : aoData,
+									success : function(resp) {
+										fnCallback(resp);
+									}
+								});
+							},
+							"aoColumns" : [
+									{
+										"data" : "id",
+										"mRender" : function(data, type, row,
+												cell) {
+											return "<input class='flat' name='table_records' value='"+data+"' type='checkbox'>";
+										}
+									},
+									{
+										"data" : null,
+										"render" : function(data, type, row,
+												cell) {
+											return cell.settings._iDisplayStart
+													+ cell.row + 1;
+										}
+									},
+									{
+										"data" : "className"
+									},
+									{
+										"data" : "title",
+									},
+									{
+										"data" : "outline",
+									},
+									{
+										"data" : "cover",
+										"mRender":function(data, type,row, cell) {
+											return '<img alt="" style="width: 30px; height: 30px;" src="'+data+'" />';
+										}
+									},
+									{
+										"data" : "url",
+									},
+									{
+										"data" : "readsum",
+									},
+									{
+										"data" : "createTime"
+									},
+									{
+										"data" : "infRec",
+										"mRender" : function(data, type, row,
+												cell) {
+											if (data == "1") {
+												return '<span class="label label-success">是</span>';
+											} else if (data == "0") {
+												return '<span class="label bg-gray">否</span>';
+											}
+										}
+									},
+									{
+										"data" : "infRelease",
+										"mRender" : function(data, type, row,
+												cell) {
+											if (data == "1") {
+												return '<span class="label label-success">是</span>';
+											} else if (data == "0") {
+												return '<span class="label bg-gray">否</span>';
+											}
+										}
+									},{
+										"data" : "infEnable",
+										"mRender" : function(data, type, row,
+												cell) {
+											if (data == "0") {
+												return '<span class="label label-success">启用</span>';
+											} else if (data == "1") {
+												return '<span class="label label-danger">禁用</span>';
+											}
+										}
+									},
+									{
+										"data" : null,
+										"render" : function(data, type, full,
+												cell) {
+											var release = '<li><a class="release" data-id='+full.id+'><i class="fa fa-eye"></i> 发布 </a></li>';
+											if (full.infRelease==1) {
+												release = '<li><a class="unRelease" data-id='+full.id+'><i class="fa fa-eye"></i> 取消发布 </a></li>';
+											}
+											var recomend = '<li><a class="recommend" data-id='+full.id+'><i class="fa fa-eye"></i> 推荐 </a></li>';
+											if (full.infRec==1) {
+												var recomend = '<li><a class="unRecommend" data-id='+full.id+'><i class="fa fa-eye"></i> 取消推荐 </a></li>';
+											}
+											var rowButton =	'<div class="btn-group">'
+						                      	 +'<button type="button" class="btn btn-danger">操作</button>'
+						                     	 +'<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">'
+						                     	 +'<span class="caret"></span>'
+						                      	 +'<span class="sr-only">Toggle Dropdown</span>'
+						                         +'</button>'
+							                     +'<ul class="dropdown-menu" role="menu">'
+							                     +'<li><a class="show" data-id='+full.id+'><i class="fa fa-pencil"></i>查看</a> </li>'
+						                         +'<li><a class="editItem" data-id='+full.id+'><i class="fa fa-pencil"></i>修改</a> </li>'
+						                         +'<li><a class="enable" data-id='+full.id+'><i class="fa fa-link"></i>启用</a> </li>'
+						                         +'<li><a class="unEnable" data-id='+full.id+'><i class="fa fa-database"></i>禁用</a> </li>'
+						                         +'<li class="divider"></li>'
+						                         + release
+												 + recomend
+						                         +'<li><a class="delItem" data-id='+full.id+'><i class="fa fa-trash-o"></i>删除</a> </li>'
+					                      +'</ul> </div>'
+											return rowButton;
+										}
+									} ]
+						});
+		$("table.table.datatable").on("click", "a.show", function() {
+			var data_id = $(this).attr("data-id");
+			layer.open({
+				type : 2,
+				title : '查看',
+				area : [ '800px', '450px' ], //宽高
+				fix : false, //不固定
+				maxmin : true,
+				content : '/info/view?id=' + data_id
+			});
+		});
+		$("table.table.datatable").on("click", "a.editItem", function() {
+			var data_id = $(this).attr("data-id");
+			layer.open({
+				type : 2,
+				title : '编辑',
+				area : [ '800px', '450px' ], //宽高
+				fix : false, //不固定
+				maxmin : true,
+				content : '/info/edit?id=' + data_id
+			});
+		});
+		$("table.table.datatable").on("click", "a.unRelease", function() {
+			var data_id = $(this).attr("data-id");
+			$.showConfirm('确认取消发布吗？', function() {
+				$.aikxianPost({
+					"url" : "/info/unRelease",
+					"data" : {
+						id : data_id
+					},
+					"success" : function(resp) {
+						if ($.dataTable) {
+							$.dataTable.fnDraw();
+						}
+						$.closeMsg();
+					}
+				});
+			});
+		});
+		$("table.table.datatable").on("click", "a.release", function() {
+			var data_id = $(this).attr("data-id");
+			$.showConfirm('确认发布吗？', function() {
+				$.aikxianPost({
+					"url" : "/info/release",
+					"data" : {
+						id : data_id
+					},
+					"success" : function(resp) {
+						if ($.dataTable) {
+							$.dataTable.fnDraw();
+						}
+						$.closeMsg();
+					}
+				});
+			});
+		});
+		$("table.table.datatable").on("click", "a.unRecommend", function() {
+			var data_id = $(this).attr("data-id");
+			$.showConfirm('确认取消推荐吗？', function() {
+				$.aikxianPost({
+					"url" : "/info/unRecommend",
+					"data" : {
+						id : data_id
+					},
+					"success" : function(resp) {
+						if ($.dataTable) {
+							$.dataTable.fnDraw();
+						}
+						$.closeMsg();
+					}
+				});
+			});
+		});
+		$("table.table.datatable").on("click", "a.recommend", function() {
+			var data_id = $(this).attr("data-id");
+			$.showConfirm('确认推荐吗？', function() {
+				$.aikxianPost({
+					"url" : "/info/recommend",
+					"data" : {
+						id : data_id
+					},
+					"success" : function(resp) {
+						if ($.dataTable) {
+							$.dataTable.fnDraw();
+						}
+						$.closeMsg();
+					}
+				});
+			});
+		});
+		$("table.table.datatable").on("click", "a.enable", function() {
+			var data_id = $(this).attr("data-id");
+			$.showConfirm('确认启用吗？', function() {
+				$.aikxianPost({
+					"url" : "/info/enable",
+					"data" : {
+						id : data_id
+					},
+					"success" : function(resp) {
+						if ($.dataTable) {
+							$.dataTable.fnDraw();
+						}
+						$.closeMsg();
+					}
+				});
+			});
+		});
+
+		$("table.table.datatable").on("click", "a.unEnable", function() {
+			var data_id = $(this).attr("data-id");
+			$.showConfirm('确认禁用吗？', function() {
+				$.aikxianPost({
+					"url" : "/info/unEnable",
+					"data" : {
+						id : data_id
+					},
+					"success" : function(resp) {
+						if ($.dataTable) {
+							$.dataTable.fnDraw();
+						}
+						$.closeMsg();
+					}
+				});
+			});
+		});
+
+		$("table.table.datatable").on("click", "a.delItem", function() {
+			var data_id = $(this).attr("data-id");
+			$.showConfirm('确认刪除吗？', function() {
+				$.aikxianPost({
+					"url" : "/info/delItem",
+					"data" : {
+						id : data_id
+					},
+					"success" : function(resp) {
+						if ($.dataTable) {
+							$.dataTable.fnDraw();
+						}
+						$.closeMsg();
+					}
+				});
+			});
+		});
+
+		$("#newAdd").click(function() {
+			layer.open({
+				type : 2,
+				title : '新增菜单',
+				area : [ '800px', '450px' ], //宽高
+				fix : false, //不固定
+				maxmin : true,
+				content : '/info/edit'
+			});
+		});
+		$("#batchDel").click(function() {
+			var checkrow = $("table.table.datatable tr input[name='table_records']");
+			if (checkrow.length == 0) {
+				$.showError('请选择至少一条数据');
+				return;
+			}
+			$.showConfirm('确认刪除吗？', function() {
+				$.aikxianPost({
+					"url" : "/info/batchDel",
+					"data" : checkrow.serializeArray(),
+					"success" : function(resp) {
+						if ($.dataTable) {
+							$.dataTable.fnDraw();
+						}
+						$.closeMsg();
+					}
+				});
+			});
+		});
+		$("#search").on("click", function() {
+			$.dataTable.fnDraw();
+		})
+	});
+</script>
+</html>

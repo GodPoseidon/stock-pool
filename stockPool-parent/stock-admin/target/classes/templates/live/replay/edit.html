@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap -->
+<link href="/resources/vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Font Awesome -->
+<link href="/resources/vendors/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<!-- NProgress -->
+<link href="/resources/vendors/nprogress/nprogress.css" rel="stylesheet">
+<link href="/resources/vendors/iCheck/skins/all.css">
+<!-- Custom Theme Style -->
+<link href="/resources/build/css/custom.css" rel="stylesheet">
+<body>
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<br />
+					<form id="demo-form2" data-parsley-validate
+						class="form-horizontal form-label-left">
+						<input id="id" type="hidden" th:value="${replay?.id}">
+						<input id="roomId" type="hidden" th:value="${replay?.roomId}">
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">标题<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" id="title" required="required"
+									th:value="${replay?.title}"
+									class="form-control col-md-7 col-xs-12" maxlength="20">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">图片 </label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="file"  class="file js-file-cos" data-type="IMAGE" data-show="picShow" data-result="picResult"> 
+								<img id="picResult" alt="" style="width: 220px; height: 220px;" th:src="${replay?.cover}" />
+								<span id="picShow" style="color: red;"></span>
+							</div>
+							
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12"
+								for="first-name">上传视频<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="file" class="file js-file-cos" data-type="VIDEO" data-show="videoShow" data-result="videoResult" >
+								<span id="videoShow" style="color:red;"></span> 
+							</div>
+							<input type="hidden" id="videoResult" th:value="${replay?.url}" required="required">
+						</div>
+						<div class="ln_solid"></div>
+						<div class="form-group">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+								<button type="button" id="submit" class="btn btn-success">提交</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- jQuery -->
+	<script src="/resources/vendors/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="/resources/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- FastClick -->
+	<script src="/resources/vendors/fastclick/lib/fastclick.js"></script>
+	<!-- NProgress -->
+	<script src="/resources/vendors/nprogress/nprogress.js"></script>
+	<!-- bootstrap-progressbar -->
+	<script
+		src="/resources/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+	<!-- iCheck -->
+	<script src="/resources/vendors/iCheck/icheck.min.js"></script>
+	<!-- bootstrap-wysiwyg -->
+	<script
+		src="/resources/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+	<script src="/resources/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+	<script src="/resources/vendors/google-code-prettify/src/prettify.js"></script>
+	<!-- jQuery Tags Input -->
+	<script
+		src="/resources/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+	<!-- Switchery -->
+	<script src="/resources/vendors/switchery/dist/switchery.min.js"></script>
+	<!-- Select2 -->
+	<script src="/resources/vendors/select2/dist/js/select2.full.min.js"></script>
+	<!-- Parsley -->
+	<script src="/resources/vendors/parsleyjs/dist/parsley.min.js"></script>
+	<!-- Autosize -->
+	<script src="/resources/vendors/autosize/dist/autosize.min.js"></script>
+	<!-- starrr -->
+	<script src="/resources/vendors/starrr/dist/starrr.js"></script>
+	<!-- Custom Theme Scripts -->
+	<script src="/resources/build/js/custom.js"></script>
+	<script type="text/javascript" src="/resources/vendors/layer/layer.js"></script>
+	<script type="text/javascript" src="/resources/cos-js-sdk-v4.js"></script>
+	<script type="text/javascript" src="/resources/cos.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$("#submit").click(function() {
+				var id = $.trim($("#id").val());
+				var roomId = $.trim($("#roomId").val());
+				var title = $.trim($("#title").val());
+				var cover = $.trim($("#picResult").attr("src"));
+				var url = $.trim($("#videoResult").val());
+				if ($('.parsley-error').length != 0) {
+					layer.msg("请输入完整信息！");
+					return false;
+				}
+				if(cover == null || cover == ""){
+					layer.msg("请输入完整信息！");
+					return false;
+				}
+				$.ajax({
+					url : "/live/replay/save",
+					type : "post",
+					data : {
+						id : id,
+						roomId : roomId,
+						title : title,
+						cover : cover,
+						url : url
+					},
+					success : function(result) {
+						if (result.success) {
+							layer.closeAll();
+							parent.location.reload();
+						} else {
+							layer.msg(result.message);
+						}
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.huanxian.dao.SpLiveReplayTMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.huanxian.entity.SpLiveReplayT">
+        <id column="id" property="id" />
+        <result column="room_id" property="roomId" />
+        <result column="title" property="title" />
+        <result column="cover" property="cover" />
+        <result column="url" property="url" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+        <result column="create_user" property="createUser" />
+        <result column="modify_time" property="modifyTime" />
+        <result column="modify_user" property="modifyUser" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id AS id,room_id AS roomId, title AS title, cover AS cover, url AS url, status AS status, create_time AS createTime, create_user AS createUser, modify_time AS modifyTime, modify_user AS modifyUser
+    </sql>
+	
+	<select id="getList" resultMap="BaseResultMap">
+		select * from sp_live_replay_t where status = 1 order by create_time desc limit #{pageIndex},#{pageSize}
+	</select>
+	<update id="batchDel">
+		update sp_live_replay_t set status = 3 where id in 
+		<foreach collection="ids" close=")" item="id" open="(" separator=",">
+			#{id}
+		</foreach>
+	</update>
+</mapper>
